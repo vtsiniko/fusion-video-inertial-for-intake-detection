@@ -4,20 +4,20 @@
 
 ## Preprocess Data
 
-1) Inertial 
--moving average filter
--high pass FIR filter 
+1) Inertial <br />
+-moving average filter <br />
+-high pass FIR filter  
 
 ```
 $ python inertial_preprocess.py
 ```
 
 
-1) Video
--face detection
--crop backround
--downsample 5 fps from 60 fps
--low resolution to 128x128
+1) Video <br />
+-face detection <br />
+-crop backround <br />
+-downsample 5 from 60 fps <br />
+-low resolution to 128x128 <br />
 -convert to greyscale
 
 ```
@@ -99,7 +99,7 @@ The following models have been trained on the training set of 21 participants to
 F1 is based on actual detection of individual intake gestures on the test set for LOSO experiments.   
 
 | Model | Features | Time_window  | Threshold  | Distance | F1 |
-| --- | ---  | --- | --- | --- |
+| --- | ---  | --- | --- | --- | --- |
 | 1D_CNN-LSTM and 3D_CNN | inertial-video | 5sec | 0.97 | 3sec | 92.1% |
 | 1D_CNN-LSTM and 2D_CNN-LSTM | inertial-video | 5sec | 0.98 | 3sec | 89.1% |
 
