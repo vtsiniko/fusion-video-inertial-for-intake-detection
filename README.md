@@ -1,10 +1,6 @@
 
-# Implementation of fusion networks for detection of food intake cycle from video and inertial sensors. We use FICv dataset to evaluate the model
+# Implementation of fusion networks for detection food intake cycle from video and inertial sensors. We use FICv dataset to evaluate the model
 
-
-Implementation of various deep neural networks for detection of food and drink intake gestures from video.
-We use recordings from a 360-degree camera to predict frame-level labels.
-Find our published paper [here](https://ieeexplore.ieee.org/document/8853283).
 
 ## Preprocess Data
 
