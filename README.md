@@ -1,1 +1,117 @@
-# fusion-video-inertial-for-intake-detection
+
+# Implementation of fusion networks for detection of food intake cycle from video and inertial sensors. We use FICv dataset to evaluate the model
+
+
+Implementation of various deep neural networks for detection of food and drink intake gestures from video.
+We use recordings from a 360-degree camera to predict frame-level labels.
+Find our published paper [here](https://ieeexplore.ieee.org/document/8853283).
+
+## Preprocess Data
+
+1) Inertial 
+-moving average filter
+-high pass FIR filter 
+
+```
+$ python inertial_preprocess.py
+```
+
+
+1) Video
+-face detection
+-crop backround
+-downsample 5 fps from 60 fps
+-low resolution to 128x128
+-convert to greyscale
+
+```
+$ python video_preprocess.py
+```
+
+## Create window dataset for train 
+
+```
+$ python fusion_dataset.py
+```
+
+### What are the flags?
+
+| Argument | Description |
+| --- | --- |
+| --time_window | Choose the default time for window data (5 second) |
+| --model_fusion | Intermediate Fusion (IF) - will be added Late Fusion (LF)|
+
+
+
+ 
+## Train Model and detect food intake cycle 
+We use keras framework to train our model 
+
+
+```
+$ python fusion_train_for_LOSO.py
+```
+
+
+```
+$ python fusion_prediction.py
+```
+
+
+### What are the flags?
+
+
+| Argument | Description |
+| --- | --- |
+| --time_window | Choose the default time for window data  (seconds) |
+| --model_fusion | Intermediate Fusion 'IF' - will be added Late Fusion 'LF'|
+| --num_epochs | Choose the default number of epochs |
+| --architectures | Choose the default network for the second channel (video data) between '3D_CNN' and '2D_CNN-LSTM'|
+
+
+
+### Evaluate F1 score
+
+```
+$ python fusion_evaluation.py
+```
+
+### What are the flags?
+
+
+| Argument | Description |
+| --- | --- |
+| --time_window | Choose the default time for window data  (seconds) |
+| --model_fusion | Intermediate Fusion 'IF' - will be added Late Fusion 'LF'|
+| --num_epochs | Choose the default number of epochs |
+| --architectures | Choose the default network for the second channel (video data) between '3D_CNN' and '2D_CNN-LSTM'|
+| --threshold | Replace with zeros elements of p that are lower than a probability threshold |
+| --distance | Minimum distance between two consecutive peaks for local maxima search|
+
+
+## Results on FICv dataset
+
+
+
+
+
+
+
+Our models are trained on the [FICv dataset](https://mug.ee.auth.gr/intake-cycle-detection/), which is available to research groups.
+The following models have been trained on the training set of 21 participants to detecet food intake cyckle.
+
+F1 is based on actual detection of individual intake gestures on the test set for LOSO experiments.   
+
+| Model | Features | Time_window  | Threshold  | Distance | F1 |
+| --- | ---  | --- | --- | --- |
+| 1D_CNN-LSTM and 3D_CNN | inertial-video | 5sec | 0.97 | 3sec | 92.1% |
+| 1D_CNN-LSTM and 2D_CNN-LSTM | inertial-video | 5sec | 0.98 | 3sec | 89.1% |
+
+
+## Required 
+
+-Tensorflow 2.4.3 <br />
+-cv2 <br />
+-face-recognition (https://pypi.org/project/face-recognition/)
+
+
